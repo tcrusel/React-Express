@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import ProfileCard from './components/ProfileCard';
 
-const sampleProfile = {
+function App() {
+  const profile = {
   name: {
     first: "Jennie",
     last: "Nichols",
@@ -11,23 +12,19 @@ const sampleProfile = {
   picture: {
     large: "https://randomuser.me/api/portraits/men/75.jpg",
   },
-};
+};;
 
-function App() {
-  const [profile, setProfile] = useState(sampleProfile);
-
-  const getProfile = () => {
-    fetch("https://randomuser.me/api")
+  useEffect(() => {
+    fetch("http://localhost:3310/api/employees")
       .then((response) => response.json())
       .then((data) => {
-        setProfile(data.results[0]);
+        (data.profile);
       });
-  };
+  }, []);
 
   return (
     <div className='App'>
       <ProfileCard profile={profile} />
-      <button type="button" onClick={getProfile} style={{backgroundColor: "grey"}}>Get profile</button>
     </div>
   );
 }
