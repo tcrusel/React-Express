@@ -1,30 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import ProfileCard from './components/ProfileCard';
 
 function App() {
-  const profile = {
-  name: {
-    first: "Jennie",
-    last: "Nichols",
-  },
-  email: "jennie.nichols@example.com",
-  picture: {
-    large: "https://randomuser.me/api/portraits/men/75.jpg",
-  },
-};;
-
+  const [profile, setProfile] = useState();
+  
   useEffect(() => {
     fetch("http://localhost:3310/api/employees")
       .then((response) => response.json())
       .then((data) => {
-        (data.profile);
+        setProfile(data.results[0]);
       });
   }, []);
 
+
   return (
     <div className='App'>
-      <ProfileCard profile={profile} />
+      {profile ? <ProfileCard profile={profile} /> : <p>Loading...</p>}
     </div>
   );
 }
